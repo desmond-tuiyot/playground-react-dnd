@@ -1,11 +1,13 @@
 import { screen, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+// import userEvent from "@testing-library/user-event";
 
-import PhyloTreeDnD from "../PhyloTreeDnD";
+// import PhyloTreeDnD from "../PhyloTreeDnD";
+import SideBar from "../SideBar";
+import MainActivity from "../MainActivity";
 
 describe("tests for phylogenetic tree drag and drop activity", () => {
   test("instructions, drag sources, and action buttons are rendered", () => {
-    render(<PhyloTreeDnD />);
+    render(<SideBar />);
 
     const header = screen.getByRole("heading", { name: /instructions/i });
     expect(header).toBeInTheDocument();
@@ -22,5 +24,15 @@ describe("tests for phylogenetic tree drag and drop activity", () => {
     const actionButtons = screen.getAllByRole("button", { name: /tree/i });
     expect(actionButtons).toHaveLength(3);
     actionButtons.forEach((item) => expect(item).toHaveTextContent(/tree/i));
+  });
+
+  test("empty tree image and drop targets are rendered", () => {
+    render(<MainActivity />);
+
+    const treeImage = screen.getByRole("img", { name: /phylogenetic tree/i });
+    expect(treeImage).toBeInTheDocument();
+
+    const dropTargets = screen.getAllByText(/drop an iguana here/i);
+    expect(dropTargets).toHaveLength(3);
   });
 });
