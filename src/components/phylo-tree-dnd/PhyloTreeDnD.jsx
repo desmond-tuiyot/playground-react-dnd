@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 
 import SideBar from "./SideBar";
-import MainActivity from "./MainActivity";
+import MainActivity from "./MainActivity/MainActivity";
 
 const PhyloTreeDnD = () => {
   return (

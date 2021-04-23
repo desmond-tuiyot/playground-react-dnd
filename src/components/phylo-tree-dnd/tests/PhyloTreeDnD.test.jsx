@@ -3,7 +3,7 @@ import { screen, render } from "@testing-library/react";
 
 // import PhyloTreeDnD from "../PhyloTreeDnD";
 import SideBar from "../SideBar";
-import MainActivity from "../MainActivity";
+import MainActivity from "../MainActivity/MainActivity";
 
 describe("tests for phylogenetic tree drag and drop activity", () => {
   test("instructions, drag sources, and action buttons are rendered", () => {
