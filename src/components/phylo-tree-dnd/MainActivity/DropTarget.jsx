@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useDrop } from "react-dnd";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,13 +18,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropTarget = ({ bounds }) => {
+const DropTarget = ({ bounds, index }) => {
   const classes = useStyles(bounds);
+  const [text, setText] = useState("drop an iguana here");
+  const [, drop] = useDrop(() => ({
+    accept: "iguana",
+    drop: (item) => {
+      setText(item.iguana);
+      return item;
+    },
+  }));
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      data-testid={`target-${index}`}
+      // eslint-disable-next-line jsx-a11y/aria-role
+      role="drop-target"
+      ref={drop}
+    >
       <Typography variant="subtitle2" color="textSecondary" component="span">
-        drop an iguana here
+        {text}
       </Typography>
     </div>
   );

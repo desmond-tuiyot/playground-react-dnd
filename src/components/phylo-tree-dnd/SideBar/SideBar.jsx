@@ -1,8 +1,4 @@
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-// import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 
 import ActionButtons from "./ActionButtons";
 import Instructions from "./Instructions";

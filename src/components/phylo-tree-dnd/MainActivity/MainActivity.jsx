@@ -37,7 +37,12 @@ const MainActivity = () => {
   );
 
   const dropTargets = dropTargetsBounds.map((_, index) => (
-    <DropTarget key={index} bounds={scaledBounds[index]} />
+    <DropTarget
+      key={index}
+      // data-testid={`target-${index}`}
+      bounds={scaledBounds[index]}
+      index={index}
+    />
   ));
 
   return (
