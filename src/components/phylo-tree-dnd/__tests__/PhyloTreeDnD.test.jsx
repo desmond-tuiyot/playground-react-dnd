@@ -1,16 +1,11 @@
-import { screen, render, fireEvent, within } from "@testing-library/react";
+import { screen, render, within } from "@testing-library/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import { fireDragDrop } from "../utils/dragDropEvents";
 import PhyloTreeDnD from "../PhyloTreeDnD";
 import SideBar from "../SideBar";
 import MainActivity from "../MainActivity";
-
-const tick = () => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, 0);
-  });
-};
 
 describe("Phylogenetic tree drag and drop activity", () => {
   test("instructions, drag sources, and action buttons are rendered", () => {
@@ -62,11 +57,7 @@ describe("Phylogenetic tree drag and drop activity", () => {
     const dragSource = screen.getByText(/marine iguana/i);
     let leftMidTarget = screen.getByTestId("target-0");
 
-    await fireEvent.dragStart(dragSource);
-    await fireEvent.dragEnter(leftMidTarget);
-    await fireEvent.dragOver(leftMidTarget);
-    await fireEvent.drop(leftMidTarget);
-    await tick();
+    await fireDragDrop(dragSource, leftMidTarget);
 
     leftMidTarget = screen.getByTestId("target-0");
     const withinTarget = within(leftMidTarget);
