@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import SideBar from "./SideBar";
 import MainActivity from "./MainActivity";
+import CustomDragLayer from "./SideBar/CustomDragLayer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,22 +17,25 @@ const useStyles = makeStyles((theme) => ({
 const PhyloTreeDnD = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg">
-      <Grid
-        container
-        spacing={0}
-        justify="center"
-        className={classes.root}
-        alignItems="stretch"
-      >
-        <Grid item xs={6} sm={3} md={2}>
-          <SideBar />
+    <>
+      <Container maxWidth="lg">
+        <Grid
+          container
+          spacing={0}
+          justify="center"
+          className={classes.root}
+          alignItems="stretch"
+        >
+          <Grid item xs={6} sm={3} md={2}>
+            <SideBar />
+          </Grid>
+          <Grid item xs>
+            <MainActivity />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <MainActivity />
-        </Grid>
-      </Grid>
-    </Container>
+        <CustomDragLayer />
+      </Container>
+    </>
   );
 };
 

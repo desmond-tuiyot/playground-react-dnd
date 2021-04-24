@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -8,18 +9,12 @@ import { useDrag } from "react-dnd";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
-  neutral: {
-    ...theme.dragStyles.neutral,
-  },
-
-  clicked: {
-    ...theme.dragStyles.clicked,
-  },
-
-  hover: { ...theme.dragStyles.hover },
+  ...theme.dragStyles,
 
   root: {
     padding: theme.spacing(1.5, 1),
+    width: "200px",
+    height: "21px",
   },
 
   text: {
@@ -36,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DragSource = ({ iguana }) => {
+  const classes = useStyles();
   const [dragStyle, setDragStyle] = useState("neutral");
-  const classes = useStyles({ dragStyle });
-  const [, drag] = useDrag(() => ({
+
+  const [{ isDragging }, drag, preview] = useDrag(() => ({
     type: "iguana",
     item: { iguana },
     end: (item, monitor) => {
@@ -46,23 +42,40 @@ const DragSource = ({ iguana }) => {
         setDragStyle("neutral");
       }
     },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   }));
+
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
+
+  useEffect(() => {
+    if (isDragging) {
+      setDragStyle("dragging");
+    }
+  }, [isDragging]);
 
   const handleClick = () => {};
 
   const handleMouseOver = () => {
+    if (isDragging) return;
     setDragStyle("hover");
   };
 
   const handleMouseLeave = () => {
+    if (isDragging) return;
     setDragStyle("neutral");
   };
 
   const handleMouseDown = () => {
+    if (isDragging) return;
     setDragStyle("clicked");
   };
 
   const handleMouseUp = () => {
+    if (isDragging) return;
     setDragStyle("neutral");
   };
 

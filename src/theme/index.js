@@ -25,6 +25,10 @@ theme.dragStyles = {
     cursor: "grabbing",
     margin: "-5px -10px 0 10px",
   },
+  dragging: {
+    display: "none",
+    transition: "display 5s",
+  },
 };
 
 theme = responsiveFontSizes(theme);
