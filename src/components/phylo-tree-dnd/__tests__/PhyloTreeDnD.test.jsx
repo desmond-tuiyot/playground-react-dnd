@@ -1,4 +1,5 @@
 import { screen, render, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -65,4 +66,42 @@ describe("Phylogenetic tree drag and drop activity", () => {
 
     expect(targetText).toHaveTextContent(/marine iguana/i);
   });
+
+  // TODO: write test for state of drag source on hover
+  test("drag sources have correct initial styling", () => {
+    render(
+      <DndProvider backend={HTML5Backend}>
+        <SideBar />
+      </DndProvider>
+    );
+
+    // correct initial state
+    // const dragSources = screen.getAllByRole("drag-source");
+    // dragSources.map((dragSource) =>
+    //   expect(dragSource).toHaveStyle({ backgroundColor: "rgb(255,255,255)" })
+    // );
+
+    // style on hover
+    // dragSources.forEach((dragSource) => {
+    //   userEvent.hover(dragSource);
+    //   expect(dragSource).toHaveStyle({
+    //     backgroundColor: "rgb(238,238,238)",
+    //     cursor: "grab",
+    //   });
+    // });
+  });
+
+  // TODO: write test for state of drag source on click
+
+  // TODO: write test for state of drag source on drag start
+
+  // TODO: write test for state of drag source on dragOver a drop target
+
+  // TODO: write test for state of drag source on drop
+
+  // TODO: write test for state of drop target on drag start
+
+  // TODO: write test for state of drop target when dragOver with drag source
+
+  // TODO: write test for state of drop target on drop
 });
