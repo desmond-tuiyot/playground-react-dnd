@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
@@ -8,14 +9,23 @@ const useStyles = makeStyles((theme) => ({
     left: ({ left }) => left,
     width: ({ width }) => width,
     height: ({ height }) => height,
-    textAlign: "center",
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
 const DropTarget = ({ bounds }) => {
   const classes = useStyles(bounds);
 
-  return <div className={classes.root}>drop an iguana here</div>;
+  return (
+    <div className={classes.root}>
+      <Typography variant="subtitle2" color="textSecondary" component="span">
+        drop an iguana here
+      </Typography>
+    </div>
+  );
 };
 
 DropTarget.propTypes = {

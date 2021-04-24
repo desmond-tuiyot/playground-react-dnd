@@ -1,4 +1,3 @@
-import { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import phylotree from "../assets/dnd-tree.png";
@@ -7,7 +6,7 @@ import {
   dropTargetsBounds,
   imageDimensions,
 } from "../assets/dropTargetDetails";
-import useWindowResize from "../../../hooks/useWindowResize";
+import useScaledBounds from "../../../hooks/useScaledBounds";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: "100%",
-    height: "100%",
+    height: "auto",
   },
   dropTargetContainer: {
     position: "absolute",
@@ -32,21 +31,10 @@ const useStyles = makeStyles((theme) => ({
 
 const MainActivity = () => {
   const classes = useStyles();
-  const imageRef = useRef();
-  const windowDimensions = useWindowResize();
-  const [scaledBounds, setScaledBounds] = useState(dropTargetsBounds);
-
-  useEffect(() => {
-    const { width } = imageRef.current.getBoundingClientRect();
-    const ratio = width / imageDimensions.width;
-    const newBounds = dropTargetsBounds.map((bound) => ({
-      width: bound.width * ratio,
-      height: bound.height * ratio,
-      top: bound.top * ratio,
-      left: bound.left * ratio,
-    }));
-    setScaledBounds(newBounds);
-  }, [windowDimensions]);
+  const [imageRef, scaledBounds] = useScaledBounds(
+    dropTargetsBounds,
+    imageDimensions
+  );
 
   const dropTargets = dropTargetsBounds.map((_, index) => (
     <DropTarget key={index} bounds={scaledBounds[index]} />
