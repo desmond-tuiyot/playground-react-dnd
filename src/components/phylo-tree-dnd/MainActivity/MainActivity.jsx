@@ -11,12 +11,11 @@ import useScaledBounds from "../../../hooks/useScaledBounds";
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    height: "100%",
-    width: "100%",
     display: "flex",
   },
   img: {
     width: "100%",
+    maxWidth: "960px",
     height: "auto",
   },
   dropTargetContainer: {
@@ -37,12 +36,7 @@ const MainActivity = () => {
   );
 
   const dropTargets = dropTargetsBounds.map((_, index) => (
-    <DropTarget
-      key={index}
-      // data-testid={`target-${index}`}
-      bounds={scaledBounds[index]}
-      index={index}
-    />
+    <DropTarget key={index} bounds={scaledBounds[index]} index={index} />
   ));
 
   return (

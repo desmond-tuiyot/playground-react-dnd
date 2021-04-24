@@ -3,7 +3,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import PhyloTreeDnD from "./phylo-tree-dnd/PhyloTreeDnD";
-import theme from "../theme/theme";
+import theme from "../theme";
 
 function App() {
   return (
