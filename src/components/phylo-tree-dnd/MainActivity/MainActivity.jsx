@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import phylotree from "../assets/dnd-tree.png";
+import phylotree from "../assets/dnd-tree-no-outline.png";
 import DropTarget from "./DropTarget";
 import {
   dropTargetsBounds,

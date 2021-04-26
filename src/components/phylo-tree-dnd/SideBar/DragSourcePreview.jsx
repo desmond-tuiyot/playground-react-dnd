@@ -5,12 +5,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
-  ...theme.dragStyles,
+  ...theme.dragSource,
 
   root: {
     padding: theme.spacing(1.5, 1),
     width: "200px",
     height: "21px",
+    cursor: "grabbing",
   },
 
   text: {

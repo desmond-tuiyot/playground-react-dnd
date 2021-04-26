@@ -6,7 +6,7 @@ let theme = createMuiTheme({
   },
 });
 
-theme.dragStyles = {
+theme.dragSource = {
   neutral: {
     backgroundColor: "#fff",
     cursor: "default",
@@ -28,6 +28,17 @@ theme.dragStyles = {
   dragging: {
     display: "none",
     transition: "display 5s",
+  },
+};
+
+theme.dropTarget = {
+  hover: {
+    backgroundColor: "#eee",
+    border: "2px solid #aaa",
+  },
+  neutral: {
+    backgroundColor: "#fff",
+    border: "2px solid #aaa",
   },
 };
 

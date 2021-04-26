@@ -9,7 +9,7 @@ import { useDrag } from "react-dnd";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
-  ...theme.dragStyles,
+  ...theme.dragSource,
 
   root: {
     padding: theme.spacing(1.5, 1),

@@ -3,8 +3,13 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useDrop } from "react-dnd";
+import clsx from "clsx";
+import { useEffect } from "react";
+
+import DragSource from "../SideBar/DragSource";
 
 const useStyles = makeStyles((theme) => ({
+  ...theme.dropTarget,
   root: {
     position: "absolute",
     top: ({ top }) => top,
@@ -20,26 +25,43 @@ const useStyles = makeStyles((theme) => ({
 
 const DropTarget = ({ bounds, index }) => {
   const classes = useStyles(bounds);
-  const [text, setText] = useState("drop an iguana here");
-  const [, drop] = useDrop(() => ({
+  const [dropTargetClass, setDropTargetClass] = useState("neutral");
+  const [droppedHere, setDroppedHere] = useState(false);
+  // const text= "drop an iguana here"
+  const [iguana, setIguana] = useState(null);
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: "iguana",
+
     drop: (item) => {
-      setText(item.iguana);
+      setIguana(item.iguana);
       return item;
     },
+
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      // item: monitor.getItem()
+    }),
   }));
+
+  useEffect(() => {
+    setDropTargetClass(isOver ? "hover" : "neutral");
+  }, [isOver]);
 
   return (
     <div
-      className={classes.root}
+      className={clsx(classes.root, classes[dropTargetClass])}
       data-testid={`target-${index}`}
       // eslint-disable-next-line jsx-a11y/aria-role
       role="drop-target"
       ref={drop}
     >
-      <Typography variant="subtitle2" color="textSecondary" component="span">
-        {text}
-      </Typography>
+      {iguana ? (
+        <DragSource iguana={iguana} />
+      ) : (
+        <Typography variant="subtitle2" color="textSecondary" component="span">
+          "drop an iguana here"
+        </Typography>
+      )}
     </div>
   );
 };
