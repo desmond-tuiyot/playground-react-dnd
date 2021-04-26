@@ -1,5 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 import ActionButtons from "./ActionButtons";
 import Instructions from "./Instructions";
@@ -9,16 +10,8 @@ const useStyles = makeStyles((theme) => ({
   root: { height: "100%", marginTop: theme.spacing(3) },
 }));
 
-const SideBar = () => {
+const SideBar = ({ undraggedIguanas, onDragEnd, actionButtons }) => {
   const classes = useStyles();
-
-  const buttons = [
-    { text: "Check Tree", handleClick: () => {} },
-    { text: "Show Tree", handleClick: () => {} },
-    { text: "Reset Tree", handleClick: () => {} },
-  ];
-
-  const iguanas = ["Green Iguana", "Marine Iguana", "Land Iguana"];
 
   return (
     <Grid container direction="column" spacing={2} className={classes.root}>
@@ -26,13 +19,22 @@ const SideBar = () => {
         <Instructions />
       </Grid>
       <Grid item container justify="center" spacing={2}>
-        <DragSources iguanas={iguanas} />
+        <DragSources
+          undraggedIguanas={undraggedIguanas}
+          onDragEnd={onDragEnd}
+        />
       </Grid>
       <Grid item container justify="center" spacing={2}>
-        <ActionButtons buttons={buttons} />
+        <ActionButtons buttons={actionButtons} />
       </Grid>
     </Grid>
   );
+};
+
+SideBar.propTypes = {
+  undraggedIguanas: PropTypes.array.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
+  actionButtons: PropTypes.array.isRequired,
 };
 
 export default SideBar;

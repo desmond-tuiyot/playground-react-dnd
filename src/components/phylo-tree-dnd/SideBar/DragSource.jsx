@@ -7,6 +7,7 @@ import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDrag } from "react-dnd";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dragSource,
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DragSource = ({ iguana }) => {
+const DragSource = ({ iguana, onDragEnd }) => {
   const classes = useStyles();
   const [dragStyle, setDragStyle] = useState("neutral");
 
@@ -40,6 +41,8 @@ const DragSource = ({ iguana }) => {
     end: (item, monitor) => {
       if (!monitor.didDrop()) {
         setDragStyle("neutral");
+      } else {
+        onDragEnd(item.iguana);
       }
     },
     collect: (monitor) => ({
@@ -100,6 +103,11 @@ const DragSource = ({ iguana }) => {
       </Paper>
     </Grid>
   );
+};
+
+DragSource.propTypes = {
+  iguana: PropTypes.string.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
 };
 
 export default DragSource;

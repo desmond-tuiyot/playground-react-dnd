@@ -23,17 +23,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropTarget = ({ bounds, index }) => {
+const DropTarget = ({ bounds, iguana, onDrop, index }) => {
   const classes = useStyles(bounds);
   const [dropTargetClass, setDropTargetClass] = useState("neutral");
-  const [droppedHere, setDroppedHere] = useState(false);
-  // const text= "drop an iguana here"
-  const [iguana, setIguana] = useState(null);
+
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "iguana",
 
+    hover: () => {
+      // console.log(iguana);
+    },
+
     drop: (item) => {
-      setIguana(item.iguana);
+      // console.log(iguana.currentIguana);
+      onDrop(iguana.id, item.iguana, iguana.currentIguana);
       return item;
     },
 
@@ -55,8 +58,8 @@ const DropTarget = ({ bounds, index }) => {
       role="drop-target"
       ref={drop}
     >
-      {iguana ? (
-        <DragSource iguana={iguana} />
+      {iguana.currentIguana ? (
+        <DragSource iguana={iguana.currentIguana} onDragEnd={() => {}} />
       ) : (
         <Typography variant="subtitle2" color="textSecondary">
           drop an iguana here
@@ -66,13 +69,13 @@ const DropTarget = ({ bounds, index }) => {
   );
 };
 
-DropTarget.propTypes = {
-  bounds: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-  }),
-};
+// DropTarget.propTypes = {
+//   bounds: PropTypes.shape({
+//     width: PropTypes.number.isRequired,
+//     height: PropTypes.number.isRequired,
+//     top: PropTypes.number.isRequired,
+//     left: PropTypes.number.isRequired,
+//   }),
+// };
 
 export default DropTarget;

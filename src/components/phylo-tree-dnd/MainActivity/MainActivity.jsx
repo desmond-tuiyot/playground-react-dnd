@@ -1,11 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 import phylotree from "../assets/dnd-tree-no-outline.png";
 import DropTarget from "./DropTarget";
-import {
-  dropTargetsBounds,
-  imageDimensions,
-} from "../assets/dropTargetDetails";
+import { imageDimensions } from "../assets/dropTargetDetails";
 import useScaledBounds from "../../../hooks/useScaledBounds";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,15 +26,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainActivity = () => {
+const MainActivity = ({ draggedIguanas, onDrop }) => {
   const classes = useStyles();
+  // console.log(draggedIguanas);
   const [imageRef, scaledBounds] = useScaledBounds(
-    dropTargetsBounds,
+    draggedIguanas,
     imageDimensions
   );
 
-  const dropTargets = dropTargetsBounds.map((_, index) => (
-    <DropTarget key={index} bounds={scaledBounds[index]} index={index} />
+  // console.log(scaledBounds);
+
+  const dropTargets = draggedIguanas.map((iguana, index) => (
+    <DropTarget
+      key={index}
+      bounds={scaledBounds[index]}
+      iguana={iguana}
+      onDrop={onDrop}
+      index={index}
+    />
   ));
 
   return (
@@ -50,6 +57,11 @@ const MainActivity = () => {
       <div className={classes.dropTargetContainer}>{dropTargets}</div>
     </div>
   );
+};
+
+MainActivity.propTypes = {
+  draggedIguanas: PropTypes.array.isRequired,
+  onDrop: PropTypes.func.isRequired,
 };
 
 export default MainActivity;
