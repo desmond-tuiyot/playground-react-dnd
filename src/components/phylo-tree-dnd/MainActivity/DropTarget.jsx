@@ -58,8 +58,8 @@ const DropTarget = ({ bounds, index }) => {
       {iguana ? (
         <DragSource iguana={iguana} />
       ) : (
-        <Typography variant="subtitle2" color="textSecondary" component="span">
-          "drop an iguana here"
+        <Typography variant="subtitle2" color="textSecondary">
+          drop an iguana here
         </Typography>
       )}
     </div>

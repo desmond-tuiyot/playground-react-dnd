@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     padding: theme.spacing(1.5, 1),
-    width: "200px",
-    height: "21px",
+    width: "8em",
+    height: "1em",
     cursor: "grabbing",
   },
 

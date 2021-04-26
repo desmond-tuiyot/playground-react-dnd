@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     padding: theme.spacing(1.5, 1),
-    width: "200px",
-    height: "21px",
+    width: "8em",
+    height: "1em",
   },
 
   text: {
-    ...theme.typography,
+    // ...theme.typography,
     display: "flex",
     alignItems: "center",
     fontWeight: theme.typography.fontWeightMedium,
@@ -93,7 +93,7 @@ const DragSource = ({ iguana }) => {
         role="drag-source"
         ref={drag}
       >
-        <Typography className={classes.text}>
+        <Typography variant="subtitle2" className={classes.text}>
           <DragIndicatorIcon fontSize="small" />
           <span className={classes.iguanaName}>{iguana}</span>
         </Typography>
