@@ -5,6 +5,7 @@ import DragSourcePreview from "./DragSourcePreview";
 
 const useStyles = makeStyles((theme) => ({
   dragLayer: {
+    // cursor: "grabbing",
     position: "fixed",
     pointerEvents: "none",
     zIndex: 100,
@@ -34,13 +35,11 @@ const CustomDragLayer = () => {
   const classes = useStyles();
   const {
     item,
-    // itemType,
     initialSourceOffset,
     currentSourceOffset,
     isDragging,
   } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
-    itemType: monitor.getItemType(),
     initialSourceOffset: monitor.getInitialSourceClientOffset(),
     currentSourceOffset: monitor.getSourceClientOffset(),
     isDragging: monitor.isDragging(),

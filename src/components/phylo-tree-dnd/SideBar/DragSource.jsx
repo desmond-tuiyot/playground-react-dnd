@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDrag } from "react-dnd";
 import clsx from "clsx";
 import PropTypes from "prop-types";
+
+import IguanaNameBox from "./IguanaNameBox";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dragSource,
@@ -19,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   text: {
-    // ...theme.typography,
     display: "flex",
     alignItems: "center",
     fontWeight: theme.typography.fontWeightMedium,
@@ -35,7 +33,7 @@ const DragSource = ({ iguana, onDragEnd }) => {
   const classes = useStyles();
   const [dragStyle, setDragStyle] = useState("neutral");
 
-  const [{ isDragging }, drag, preview] = useDrag(() => ({
+  const [{ isDragging }, drag, preview] = useDrag({
     type: "iguana",
     item: { iguana },
     end: (item, monitor) => {
@@ -48,7 +46,7 @@ const DragSource = ({ iguana, onDragEnd }) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  });
 
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true });
@@ -83,24 +81,16 @@ const DragSource = ({ iguana, onDragEnd }) => {
   };
 
   return (
-    <Grid item xs={12}>
-      <Paper
+    <Grid item xs={12} ref={drag}>
+      <IguanaNameBox
+        iguana={iguana}
         className={clsx(classes.root, classes[dragStyle])}
         onClick={handleClick}
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseLeave}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
-        elevation={1}
-        variant="outlined"
-        role="drag-source"
-        ref={drag}
-      >
-        <Typography variant="subtitle2" className={classes.text}>
-          <DragIndicatorIcon fontSize="small" />
-          <span className={classes.iguanaName}>{iguana}</span>
-        </Typography>
-      </Paper>
+      />
     </Grid>
   );
 };

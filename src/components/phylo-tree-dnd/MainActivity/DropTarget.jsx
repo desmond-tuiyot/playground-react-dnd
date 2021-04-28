@@ -27,24 +27,17 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
   const classes = useStyles(bounds);
   const [dropTargetClass, setDropTargetClass] = useState("neutral");
 
-  const [{ isOver }, drop] = useDrop(() => ({
+  const [{ isOver }, drop] = useDrop({
     accept: "iguana",
-
-    hover: () => {
-      // console.log(iguana);
-    },
-
     drop: (item) => {
-      // console.log(iguana.currentIguana);
       onDrop(iguana.id, item.iguana, iguana.currentIguana);
       return item;
     },
 
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      // item: monitor.getItem()
     }),
-  }));
+  });
 
   useEffect(() => {
     setDropTargetClass(isOver ? "hover" : "neutral");
@@ -69,13 +62,13 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
   );
 };
 
-// DropTarget.propTypes = {
-//   bounds: PropTypes.shape({
-//     width: PropTypes.number.isRequired,
-//     height: PropTypes.number.isRequired,
-//     top: PropTypes.number.isRequired,
-//     left: PropTypes.number.isRequired,
-//   }),
-// };
+DropTarget.propTypes = {
+  bounds: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    top: PropTypes.number.isRequired,
+    left: PropTypes.number.isRequired,
+  }),
+};
 
 export default DropTarget;

@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 
 import phylotree from "../assets/dnd-tree-no-outline.png";
 import DropTarget from "./DropTarget";
-import { imageDimensions } from "../assets/dropTargetDetails";
+import {
+  imageDimensions,
+  dropTargetsBounds,
+} from "../assets/dropTargetDetails";
 import useScaledBounds from "../../../hooks/useScaledBounds";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,13 +31,10 @@ const useStyles = makeStyles((theme) => ({
 
 const MainActivity = ({ draggedIguanas, onDrop }) => {
   const classes = useStyles();
-  // console.log(draggedIguanas);
   const [imageRef, scaledBounds] = useScaledBounds(
-    draggedIguanas,
+    dropTargetsBounds,
     imageDimensions
   );
-
-  // console.log(scaledBounds);
 
   const dropTargets = draggedIguanas.map((iguana, index) => (
     <DropTarget
