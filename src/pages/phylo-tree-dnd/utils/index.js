@@ -7,3 +7,5 @@ export const updateStateProps = produce((draft, newStyle) => {
     draft[prop] = newStyle[prop];
   }
 });
+
+export const noop = () => {};

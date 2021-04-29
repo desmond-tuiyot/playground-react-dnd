@@ -6,7 +6,7 @@ import { useDrag } from "react-dnd";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 
-import IguanaNameBox from "./IguanaNameBox";
+import IguanaNameBox from "components/IguanaNameBox";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dragSource,
@@ -16,26 +16,21 @@ const useStyles = makeStyles((theme) => ({
     width: "8em",
     height: "1em",
   },
-
-  text: {
-    display: "flex",
-    alignItems: "center",
-    fontWeight: theme.typography.fontWeightMedium,
-    pointerEvents: "none",
-  },
-
-  iguanaName: {
-    paddingLeft: theme.spacing(1),
-  },
 }));
 
-const DragSource = ({ iguana, onDragEnd }) => {
+const useNoDragSourcePreview = (preview) => {
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
+};
+
+const DragSource = ({ onDragStart, source, iguana, onDragEnd }) => {
   const classes = useStyles();
   const [dragStyle, setDragStyle] = useState("neutral");
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: "iguana",
-    item: { iguana },
+    item: { iguana, source },
     end: (item, monitor) => {
       if (!monitor.didDrop()) {
         setDragStyle("neutral");
@@ -48,15 +43,7 @@ const DragSource = ({ iguana, onDragEnd }) => {
     }),
   });
 
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, [preview]);
-
-  useEffect(() => {
-    if (isDragging) {
-      setDragStyle("dragging");
-    }
-  }, [isDragging]);
+  useNoDragSourcePreview(preview);
 
   const handleClick = () => {};
 
@@ -82,22 +69,31 @@ const DragSource = ({ iguana, onDragEnd }) => {
 
   return (
     <Grid item xs={12} ref={drag}>
-      <IguanaNameBox
-        iguana={iguana}
-        className={clsx(classes.root, classes[dragStyle])}
-        onClick={handleClick}
-        onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-      />
+      {isDragging ? (
+        <div className={classes.root} />
+      ) : (
+        <IguanaNameBox
+          iguana={iguana}
+          className={clsx(classes.root, classes[dragStyle])}
+          onClick={handleClick}
+          onMouseOver={handleMouseOver}
+          onMouseLeave={handleMouseLeave}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+        />
+      )}
     </Grid>
   );
 };
 
 DragSource.propTypes = {
   iguana: PropTypes.string.isRequired,
-  onDragEnd: PropTypes.func.isRequired,
+  onDragEnd: PropTypes.func,
+};
+
+DragSource.defaultProps = {
+  onDragStart: () => {},
+  onDragEnd: () => {},
 };
 
 export default DragSource;

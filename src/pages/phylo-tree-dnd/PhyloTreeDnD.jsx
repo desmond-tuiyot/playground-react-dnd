@@ -25,19 +25,49 @@ const PhyloTreeDnD = () => {
   const [undraggedIguanas, setUndraggedIguanas] = useState(iguanas);
   const [draggedIguanas, setDraggedIguanas] = useState(dropTargets);
 
+  const handleDragStart = (item) => {
+    // setUndraggedIguanas(
+    //   [...undraggedIguanas].filter((iguanaName) => iguanaName !== item)
+    // );
+  };
+
   const handleDragEnd = (iguana) => {};
 
-  const getNewState = produce((draft, id, newIguanaName) => {
-    const index = draft.findIndex((item) => item.id === id);
-    draft[index].currentIguana = newIguanaName;
+  const updateUndraggedIguanas = (previousItem, droppedItem) => {
+    let newUndragged = [...undraggedIguanas];
+
+    if (previousItem) {
+      newUndragged.push(previousItem);
+    }
+
+    newUndragged = newUndragged.filter((iguana) => iguana !== droppedItem);
+    setUndraggedIguanas(newUndragged);
+  };
+
+  const getNewDraggedIguanas = produce((draft, id, newIguanaName, source) => {
+    if (source !== "sidebar") {
+      const sourceIndex = draft.findIndex((item) => item.id === source);
+      draft[sourceIndex].currentIguana = null;
+    }
+
+    const destinationIndex = draft.findIndex((item) => item.id === id);
+    draft[destinationIndex].currentIguana = newIguanaName;
   });
 
-  const handleDrop = (id, droppedItem, previousItem) => {
-    if (previousItem) {
-      setUndraggedIguanas([...undraggedIguanas, droppedItem]);
-    }
-    const newState = getNewState(draggedIguanas, id, droppedItem);
+  const updateDraggedIguanas = (id, droppedItem, source) => {
+    const newState = getNewDraggedIguanas(
+      draggedIguanas,
+      id,
+      droppedItem,
+      source
+    );
     setDraggedIguanas(newState);
+  };
+
+  const handleDrop = (id, droppedItem, previousItem) => {
+    const { iguana, source } = droppedItem;
+    updateUndraggedIguanas(previousItem, iguana);
+    updateDraggedIguanas(id, iguana, source);
   };
 
   const handleResetTree = () => {};
@@ -64,13 +94,18 @@ const PhyloTreeDnD = () => {
         >
           <Grid item xs={6} sm={3} md={2}>
             <SideBar
+              onDragStart={handleDragStart}
               undraggedIguanas={undraggedIguanas}
               onDragEnd={handleDragEnd}
               actionButtons={actionButtons}
             />
           </Grid>
           <Grid item xs>
-            <MainActivity draggedIguanas={draggedIguanas} onDrop={handleDrop} />
+            <MainActivity
+              draggedIguanas={draggedIguanas}
+              onDragEnd={handleDragEnd}
+              onDrop={handleDrop}
+            />
           </Grid>
         </Grid>
         <CustomDragLayer />

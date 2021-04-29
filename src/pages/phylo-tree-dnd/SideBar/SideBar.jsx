@@ -2,15 +2,20 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import ActionButtons from "./ActionButtons";
-import Instructions from "./Instructions";
+import ActionButtons from "components/ActionButtons";
+import Instructions from "components/Instructions";
 import DragSources from "./DragSources";
 
 const useStyles = makeStyles((theme) => ({
   root: { height: "100%", marginTop: theme.spacing(3) },
 }));
 
-const SideBar = ({ undraggedIguanas, onDragEnd, actionButtons }) => {
+const SideBar = ({
+  undraggedIguanas,
+  onDragStart,
+  onDragEnd,
+  actionButtons,
+}) => {
   const classes = useStyles();
 
   return (
@@ -18,8 +23,15 @@ const SideBar = ({ undraggedIguanas, onDragEnd, actionButtons }) => {
       <Grid item container justify="center" spacing={2}>
         <Instructions />
       </Grid>
-      <Grid item container justify="center" spacing={2}>
+      <Grid
+        item
+        container
+        justify="center"
+        spacing={2}
+        style={{ minHeight: "4em" }}
+      >
         <DragSources
+          onDragStart={onDragStart}
           undraggedIguanas={undraggedIguanas}
           onDragEnd={onDragEnd}
         />

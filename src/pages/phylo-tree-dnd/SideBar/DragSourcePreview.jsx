@@ -1,4 +1,4 @@
-import IguanaNameBox from "./IguanaNameBox";
+import IguanaNameBox from "components/IguanaNameBox";
 
 const DragSourcePreview = ({ iguana }) => {
   return <IguanaNameBox iguana={iguana} />;

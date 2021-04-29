@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
@@ -27,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IguanaNameBox = ({ iguana, ...paperProps }) => {
+const IguanaNameBox = forwardRef(({ iguana, ...paperProps }, ref) => {
   const classes = useStyles();
 
   return (
     <Paper
+      ref={ref}
       className={clsx(classes.root, classes.clicked)}
       elevation={1}
       variant="outlined"
@@ -44,7 +46,7 @@ const IguanaNameBox = ({ iguana, ...paperProps }) => {
       </Typography>
     </Paper>
   );
-};
+});
 
 IguanaNameBox.propTypes = {
   iguana: PropTypes.string.isRequired,

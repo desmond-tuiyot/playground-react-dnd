@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 
 import DragSource from "../SideBar/DragSource";
+// import IguanaNameBox from "components/IguanaNameBox";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dropTarget,
@@ -30,7 +31,7 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
   const [{ isOver }, drop] = useDrop({
     accept: "iguana",
     drop: (item) => {
-      onDrop(iguana.id, item.iguana, iguana.currentIguana);
+      onDrop(iguana.id, item, iguana.currentIguana);
       return item;
     },
 
@@ -52,7 +53,7 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
       ref={drop}
     >
       {iguana.currentIguana ? (
-        <DragSource iguana={iguana.currentIguana} onDragEnd={() => {}} />
+        <DragSource iguana={iguana.currentIguana} source={iguana.id} />
       ) : (
         <Typography variant="subtitle2" color="textSecondary">
           drop an iguana here
