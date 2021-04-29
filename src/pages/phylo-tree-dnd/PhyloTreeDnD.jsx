@@ -8,6 +8,7 @@ import SideBar from "./SideBar";
 import MainActivity from "./MainActivity";
 import CustomDragLayer from "./SideBar/CustomDragLayer";
 import { dropTargets } from "./assets/dropTargetDetails";
+import * as utils from "./utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,41 +34,22 @@ const PhyloTreeDnD = () => {
 
   const handleDragEnd = (iguana) => {};
 
-  const updateUndraggedIguanas = (previousItem, droppedItem) => {
-    let newUndragged = [...undraggedIguanas];
-
-    if (previousItem) {
-      newUndragged.push(previousItem);
-    }
-
-    newUndragged = newUndragged.filter((iguana) => iguana !== droppedItem);
-    setUndraggedIguanas(newUndragged);
-  };
-
-  const getNewDraggedIguanas = produce((draft, id, newIguanaName, source) => {
-    if (source !== "sidebar") {
-      const sourceIndex = draft.findIndex((item) => item.id === source);
-      draft[sourceIndex].currentIguana = null;
-    }
-
-    const destinationIndex = draft.findIndex((item) => item.id === id);
-    draft[destinationIndex].currentIguana = newIguanaName;
-  });
-
-  const updateDraggedIguanas = (id, droppedItem, source) => {
-    const newState = getNewDraggedIguanas(
-      draggedIguanas,
-      id,
-      droppedItem,
-      source
-    );
-    setDraggedIguanas(newState);
-  };
-
   const handleDrop = (id, droppedItem, previousItem) => {
     const { iguana, source } = droppedItem;
-    updateUndraggedIguanas(previousItem, iguana);
-    updateDraggedIguanas(id, iguana, source);
+    let newUndragged = utils.getNewUndraggedIguanas(
+      undraggedIguanas,
+      previousItem,
+      iguana
+    );
+    let newDragged = utils.getNewDraggedIguanas(
+      draggedIguanas,
+      id,
+      iguana,
+      source
+    );
+
+    setUndraggedIguanas(newUndragged);
+    setDraggedIguanas(newDragged);
   };
 
   const handleResetTree = () => {};
