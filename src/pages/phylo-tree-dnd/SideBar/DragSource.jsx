@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { getEmptyImage } from "react-dnd-html5-backend";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDrag } from "react-dnd";
@@ -7,6 +5,8 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 
 import IguanaNameBox from "components/IguanaNameBox";
+import useNoDragSourcePreview from "hooks/useNoDragSourcePreview";
+import useDragSourceStyle from "hooks/useDragSourceStyle";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dragSource,
@@ -18,52 +18,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const useNoDragSourcePreview = (preview) => {
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, [preview]);
-};
-
 const DragSource = ({ source, iguana }) => {
   const classes = useStyles();
-  const [dragStyle, setDragStyle] = useState("neutral");
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: "iguana",
     item: { iguana, source },
-    end: (_, monitor) => {
-      if (!monitor.didDrop()) {
-        setDragStyle("neutral");
-      }
-    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
+  const { handleEvent, dragStyle } = useDragSourceStyle(isDragging);
   useNoDragSourcePreview(preview);
-
-  const handleClick = () => {};
-
-  const handleMouseOver = () => {
-    if (isDragging) return;
-    setDragStyle("hover");
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) return;
-    setDragStyle("neutral");
-  };
-
-  const handleMouseDown = () => {
-    if (isDragging) return;
-    setDragStyle("clicked");
-  };
-
-  const handleMouseUp = () => {
-    if (isDragging) return;
-    setDragStyle("neutral");
-  };
 
   return (
     <Grid item xs={12} ref={drag}>
@@ -73,11 +40,10 @@ const DragSource = ({ source, iguana }) => {
         <IguanaNameBox
           iguana={iguana}
           className={clsx(classes.root, classes[dragStyle])}
-          onClick={handleClick}
-          onMouseOver={handleMouseOver}
-          onMouseLeave={handleMouseLeave}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
+          onMouseOver={handleEvent}
+          onMouseLeave={handleEvent}
+          onMouseDown={handleEvent}
+          onMouseUp={handleEvent}
         />
       )}
     </Grid>
