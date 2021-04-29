@@ -61,6 +61,8 @@ export const dropTargets = [
   },
 ];
 
+export const iguanaNames = ["Green Iguana", "Marine Iguana", "Land Iguana"];
+
 export const imageDimensions = {
   width: 960,
   height: 540,

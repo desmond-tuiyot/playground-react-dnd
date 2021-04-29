@@ -2,21 +2,14 @@ import PropTypes from "prop-types";
 
 import DragSource from "./DragSource";
 
-const DragSources = ({ onDragStart, undraggedIguanas, onDragEnd }) => {
+const DragSources = ({ undraggedIguanas }) => {
   return undraggedIguanas.map((iguana, index) => (
-    <DragSource
-      source="sidebar"
-      onDragStart={onDragStart}
-      key={index}
-      iguana={iguana}
-      onDragEnd={onDragEnd}
-    />
+    <DragSource source="sidebar" key={index} iguana={iguana} />
   ));
 };
 
 DragSources.propTypes = {
   undraggedIguanas: PropTypes.array.isRequired,
-  onDragEnd: PropTypes.func.isRequired,
 };
 
 export default DragSources;

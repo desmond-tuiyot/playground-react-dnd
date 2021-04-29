@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainActivity = ({ draggedIguanas, onDragEnd, onDrop }) => {
+const MainActivity = ({ draggedIguanas, onDrop }) => {
   const classes = useStyles();
   const [imageRef, scaledBounds] = useScaledBounds(
     dropTargetsBounds,
@@ -39,7 +39,6 @@ const MainActivity = ({ draggedIguanas, onDragEnd, onDrop }) => {
   const dropTargets = draggedIguanas.map((iguana, index) => (
     <DropTarget
       key={index}
-      onDragEnd={onDragEnd}
       bounds={scaledBounds[index]}
       iguana={iguana}
       onDrop={onDrop}

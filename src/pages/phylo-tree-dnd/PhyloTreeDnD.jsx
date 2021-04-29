@@ -7,7 +7,7 @@ import produce from "immer";
 import SideBar from "./SideBar";
 import MainActivity from "./MainActivity";
 import CustomDragLayer from "./SideBar/CustomDragLayer";
-import { dropTargets } from "./assets/dropTargetDetails";
+import { iguanaNames, dropTargets } from "./assets/dropTargetDetails";
 import * as utils from "./utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,18 +21,8 @@ const useStyles = makeStyles((theme) => ({
 const PhyloTreeDnD = () => {
   const classes = useStyles();
 
-  const iguanas = ["Green Iguana", "Marine Iguana", "Land Iguana"];
-
-  const [undraggedIguanas, setUndraggedIguanas] = useState(iguanas);
+  const [undraggedIguanas, setUndraggedIguanas] = useState(iguanaNames);
   const [draggedIguanas, setDraggedIguanas] = useState(dropTargets);
-
-  const handleDragStart = (item) => {
-    // setUndraggedIguanas(
-    //   [...undraggedIguanas].filter((iguanaName) => iguanaName !== item)
-    // );
-  };
-
-  const handleDragEnd = (iguana) => {};
 
   const handleDrop = (id, droppedItem, previousItem) => {
     const { iguana, source } = droppedItem;
@@ -52,16 +42,19 @@ const PhyloTreeDnD = () => {
     setDraggedIguanas(newDragged);
   };
 
-  const handleResetTree = () => {};
+  const handleResetTree = () => {
+    setUndraggedIguanas(iguanaNames);
+    setDraggedIguanas(dropTargets);
+  };
 
   const handleShowTree = () => {};
 
   const handleCheckTree = () => {};
 
   const actionButtons = [
-    { text: "Check Tree", handleCheckTree },
-    { text: "Show Tree", handleShowTree },
-    { text: "Reset Tree", handleResetTree },
+    { text: "Check Tree", handleClick: handleCheckTree },
+    { text: "Show Tree", handleClick: handleShowTree },
+    { text: "Reset Tree", handleClick: handleResetTree },
   ];
 
   return (
@@ -76,18 +69,12 @@ const PhyloTreeDnD = () => {
         >
           <Grid item xs={6} sm={3} md={2}>
             <SideBar
-              onDragStart={handleDragStart}
               undraggedIguanas={undraggedIguanas}
-              onDragEnd={handleDragEnd}
               actionButtons={actionButtons}
             />
           </Grid>
           <Grid item xs>
-            <MainActivity
-              draggedIguanas={draggedIguanas}
-              onDragEnd={handleDragEnd}
-              onDrop={handleDrop}
-            />
+            <MainActivity draggedIguanas={draggedIguanas} onDrop={handleDrop} />
           </Grid>
         </Grid>
         <CustomDragLayer />

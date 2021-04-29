@@ -24,18 +24,16 @@ const useNoDragSourcePreview = (preview) => {
   }, [preview]);
 };
 
-const DragSource = ({ onDragStart, source, iguana, onDragEnd }) => {
+const DragSource = ({ source, iguana }) => {
   const classes = useStyles();
   const [dragStyle, setDragStyle] = useState("neutral");
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: "iguana",
     item: { iguana, source },
-    end: (item, monitor) => {
+    end: (_, monitor) => {
       if (!monitor.didDrop()) {
         setDragStyle("neutral");
-      } else {
-        onDragEnd(item.iguana);
       }
     },
     collect: (monitor) => ({
@@ -88,12 +86,6 @@ const DragSource = ({ onDragStart, source, iguana, onDragEnd }) => {
 
 DragSource.propTypes = {
   iguana: PropTypes.string.isRequired,
-  onDragEnd: PropTypes.func,
-};
-
-DragSource.defaultProps = {
-  onDragStart: () => {},
-  onDragEnd: () => {},
 };
 
 export default DragSource;

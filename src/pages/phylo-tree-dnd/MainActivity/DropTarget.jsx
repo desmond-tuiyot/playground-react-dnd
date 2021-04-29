@@ -7,7 +7,6 @@ import clsx from "clsx";
 import { useEffect } from "react";
 
 import DragSource from "../SideBar/DragSource";
-// import IguanaNameBox from "components/IguanaNameBox";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dropTarget,
