@@ -29,7 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainActivity = ({ draggedIguanas, onDrop, treeCorrectnessMarkers }) => {
+const MainActivity = ({
+  handleDragStart,
+  draggedIguanas,
+  onDrop,
+  treeCorrectnessMarkers,
+}) => {
   const classes = useStyles();
   const [imageRef, scaledBounds] = useScaledBounds(
     dropTargetsBounds,
@@ -43,6 +48,7 @@ const MainActivity = ({ draggedIguanas, onDrop, treeCorrectnessMarkers }) => {
       iguana={iguana}
       onDrop={onDrop}
       index={index}
+      handleDragStart={handleDragStart}
       treeCorrectnessMarker={
         treeCorrectnessMarkers ? treeCorrectnessMarkers[index] : null
       }

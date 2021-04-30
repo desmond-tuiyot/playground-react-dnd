@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: { height: "100%", marginTop: theme.spacing(3) },
 }));
 
-const SideBar = ({ undraggedIguanas, actionButtons }) => {
+const SideBar = ({ handleDragStart, undraggedIguanas, actionButtons }) => {
   const classes = useStyles();
 
   return (
@@ -25,7 +25,10 @@ const SideBar = ({ undraggedIguanas, actionButtons }) => {
         spacing={2}
         style={{ minHeight: "4em" }}
       >
-        <DragSources undraggedIguanas={undraggedIguanas} />
+        <DragSources
+          handleDragStart={handleDragStart}
+          undraggedIguanas={undraggedIguanas}
+        />
       </Grid>
       <Grid item container justify="center" spacing={2}>
         <ActionButtons buttons={actionButtons} />

@@ -24,6 +24,10 @@ const PhyloTreeDnD = () => {
   const [draggedIguanas, setDraggedIguanas] = useState(dropTargets);
   const [treeCorrectnessMarkers, setTreeCorrectnessMarkers] = useState(null);
 
+  const handleDragStart = () => {
+    setTreeCorrectnessMarkers(null);
+  };
+
   const handleDrop = (id, droppedItem, previousItem) => {
     const { iguana, source } = droppedItem;
     let newUndragged = utils.getNewUndraggedIguanas(
@@ -79,6 +83,7 @@ const PhyloTreeDnD = () => {
             <SideBar
               undraggedIguanas={undraggedIguanas}
               actionButtons={actionButtons}
+              handleDragStart={handleDragStart}
             />
           </Grid>
           <Grid item xs>
@@ -86,6 +91,7 @@ const PhyloTreeDnD = () => {
               draggedIguanas={draggedIguanas}
               onDrop={handleDrop}
               treeCorrectnessMarkers={treeCorrectnessMarkers}
+              handleDragStart={handleDragStart}
             />
           </Grid>
         </Grid>

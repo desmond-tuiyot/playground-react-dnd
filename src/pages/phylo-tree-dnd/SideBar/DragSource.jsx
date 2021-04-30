@@ -18,12 +18,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DragSource = ({ source, iguana }) => {
+const DragSource = ({ source, iguana, handleDragStart }) => {
   const classes = useStyles();
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: "iguana",
-    item: { iguana, source },
+    item: () => {
+      handleDragStart();
+      return { iguana, source };
+    },
+
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
