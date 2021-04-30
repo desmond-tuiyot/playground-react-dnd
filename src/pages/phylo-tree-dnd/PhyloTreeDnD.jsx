@@ -28,22 +28,37 @@ const PhyloTreeDnD = () => {
     setTreeCorrectnessMarkers(null);
   };
 
-  const handleDrop = (id, droppedItem, previousItem) => {
-    const { iguana, source } = droppedItem;
-    let newUndragged = utils.getNewUndraggedIguanas(
-      undraggedIguanas,
-      previousItem,
-      iguana
-    );
-    let newDragged = utils.getNewDraggedIguanas(
-      draggedIguanas,
-      id,
-      iguana,
-      source
-    );
+  const handleDrop = (droppedItem, iguanaDetails) => {
+    const { iguana, source, destination } = droppedItem;
+    if (destination === "tree") {
+      const id = iguanaDetails.id;
+      const previousItem = iguanaDetails.previousItem;
 
-    setUndraggedIguanas(newUndragged);
-    setDraggedIguanas(newDragged);
+      let newUndragged = utils.getNewUndraggedIguanas(
+        undraggedIguanas,
+        previousItem,
+        iguana
+      );
+      let newDragged = utils.getNewDraggedIguanas(
+        draggedIguanas,
+        id,
+        iguana,
+        source
+      );
+
+      setUndraggedIguanas(newUndragged);
+      setDraggedIguanas(newDragged);
+    } else if (destination === "sidebar") {
+      setUndraggedIguanas([...undraggedIguanas, iguana]);
+      const newDraggedIguanas = draggedIguanas.map((item) => {
+        return {
+          ...item,
+          currentIguana:
+            item.currentIguana === iguana ? null : item.currentIguana,
+        };
+      });
+      setDraggedIguanas(newDraggedIguanas);
+    }
   };
 
   const handleResetTree = () => {
@@ -81,6 +96,7 @@ const PhyloTreeDnD = () => {
         >
           <Grid item xs={6} sm={3} md={2}>
             <SideBar
+              onDrop={handleDrop}
               undraggedIguanas={undraggedIguanas}
               actionButtons={actionButtons}
               handleDragStart={handleDragStart}

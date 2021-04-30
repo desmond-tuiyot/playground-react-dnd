@@ -51,7 +51,7 @@ const DropTarget = ({
   const [{ isOver }, drop] = useDrop({
     accept: "iguana",
     drop: (item) => {
-      onDrop(iguana.id, item, iguana.currentIguana);
+      onDrop({ ...item, destination: "tree" }, iguana);
       return item;
     },
 

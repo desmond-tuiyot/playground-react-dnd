@@ -4,13 +4,19 @@ import PropTypes from "prop-types";
 
 import ActionButtons from "components/ActionButtons";
 import Instructions from "components/Instructions";
-import DragSources from "./DragSources";
+// import DragSources from "./DragSources";
+import UndraggedIguanasPanel from "./UndraggedIguanasPanel";
 
 const useStyles = makeStyles((theme) => ({
   root: { height: "100%", marginTop: theme.spacing(3) },
 }));
 
-const SideBar = ({ handleDragStart, undraggedIguanas, actionButtons }) => {
+const SideBar = ({
+  handleDragStart,
+  onDrop,
+  undraggedIguanas,
+  actionButtons,
+}) => {
   const classes = useStyles();
 
   return (
@@ -18,7 +24,12 @@ const SideBar = ({ handleDragStart, undraggedIguanas, actionButtons }) => {
       <Grid item container justify="center" spacing={2}>
         <Instructions />
       </Grid>
-      <Grid
+      <UndraggedIguanasPanel
+        onDrop={onDrop}
+        handleDragStart={handleDragStart}
+        undraggedIguanas={undraggedIguanas}
+      />
+      {/* <Grid
         item
         container
         justify="center"
@@ -29,7 +40,7 @@ const SideBar = ({ handleDragStart, undraggedIguanas, actionButtons }) => {
           handleDragStart={handleDragStart}
           undraggedIguanas={undraggedIguanas}
         />
-      </Grid>
+      </Grid> */}
       <Grid item container justify="center" spacing={2}>
         <ActionButtons buttons={actionButtons} />
       </Grid>
