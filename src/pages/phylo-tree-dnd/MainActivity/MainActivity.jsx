@@ -7,7 +7,7 @@ import {
   imageDimensions,
   dropTargetsBounds,
 } from "../assets/dropTargetDetails";
-import useScaledBounds from "../../../hooks/useScaledBounds";
+import useScaledBounds from "hooks/useScaledBounds";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainActivity = ({ draggedIguanas, onDrop }) => {
+const MainActivity = ({ draggedIguanas, onDrop, treeCorrectnessMarkers }) => {
   const classes = useStyles();
   const [imageRef, scaledBounds] = useScaledBounds(
     dropTargetsBounds,
@@ -43,6 +43,9 @@ const MainActivity = ({ draggedIguanas, onDrop }) => {
       iguana={iguana}
       onDrop={onDrop}
       index={index}
+      treeCorrectnessMarker={
+        treeCorrectnessMarkers ? treeCorrectnessMarkers[index] : null
+      }
     />
   ));
 

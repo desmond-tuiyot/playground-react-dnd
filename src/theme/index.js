@@ -41,6 +41,16 @@ theme.dropTarget = {
     backgroundColor: "#fff",
     border: "2px solid #aaa",
   },
+  correct: {
+    backgroundColor: "#fff",
+    border: `2px solid ${theme.palette.success.main}`,
+    color: theme.palette.success.main,
+  },
+  incorrect: {
+    backgroundColor: "#fff",
+    border: `2px solid ${theme.palette.error.main}`,
+    color: theme.palette.error.main,
+  },
 };
 
 theme = responsiveFontSizes(theme);

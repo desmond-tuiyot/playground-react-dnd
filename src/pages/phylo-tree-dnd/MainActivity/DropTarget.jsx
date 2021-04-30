@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 
 import DragSource from "../SideBar/DragSource";
+import CorrectnessMarkerIcon from "components/CorrectnessMarkerIcon";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dropTarget,
@@ -16,16 +17,35 @@ const useStyles = makeStyles((theme) => ({
     left: ({ left }) => left,
     width: ({ width }) => width,
     height: ({ height }) => height,
+    padding: theme.spacing(1),
 
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    // border: "1px solid red",
   },
 }));
 
-const DropTarget = ({ bounds, iguana, onDrop, index }) => {
+const getDropTargetClass = (treeCorrectnessMarker) => {
+  return treeCorrectnessMarker === null
+    ? "neutral"
+    : treeCorrectnessMarker === true
+    ? "correct"
+    : "incorrect";
+};
+
+const DropTarget = ({
+  bounds,
+  iguana,
+  onDrop,
+  index,
+  treeCorrectnessMarker,
+}) => {
   const classes = useStyles(bounds);
-  const [dropTargetClass, setDropTargetClass] = useState("neutral");
+
+  const [dropTargetClass, setDropTargetClass] = useState(
+    getDropTargetClass(treeCorrectnessMarker)
+  );
 
   const [{ isOver }, drop] = useDrop({
     accept: "iguana",
@@ -40,8 +60,14 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
   });
 
   useEffect(() => {
-    setDropTargetClass(isOver ? "hover" : "neutral");
-  }, [isOver]);
+    setDropTargetClass(getDropTargetClass(treeCorrectnessMarker));
+  }, [treeCorrectnessMarker]);
+
+  useEffect(() => {
+    setDropTargetClass(
+      isOver ? "hover" : getDropTargetClass(treeCorrectnessMarker)
+    );
+  }, [isOver, treeCorrectnessMarker]);
 
   return (
     <div
@@ -52,11 +78,16 @@ const DropTarget = ({ bounds, iguana, onDrop, index }) => {
       ref={drop}
     >
       {iguana.currentIguana ? (
-        <DragSource iguana={iguana.currentIguana} source={iguana.id} />
+        <>
+          <DragSource iguana={iguana.currentIguana} source={iguana.id} />
+        </>
       ) : (
         <Typography variant="subtitle2" color="textSecondary">
           drop an iguana here
         </Typography>
+      )}
+      {treeCorrectnessMarker !== null && (
+        <CorrectnessMarkerIcon treeCorrectnessMarker={treeCorrectnessMarker} />
       )}
     </div>
   );

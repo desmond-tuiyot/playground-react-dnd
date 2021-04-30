@@ -35,4 +35,38 @@ export const getNewUndraggedIguanas = (
   return newUndragged;
 };
 
+export const getCompletedTree = produce((draft) => {
+  const placedIguanas = [];
+  draft.forEach((iguanaDetails, index) => {
+    const { currentIguana, validIguanas } = iguanaDetails;
+    if (!validIguanas.includes(currentIguana)) {
+      const unplacedIguanaIndex = validIguanas.findIndex(
+        (iguana) => !placedIguanas.includes(iguana)
+      );
+      draft[index].currentIguana = validIguanas[unplacedIguanaIndex];
+      placedIguanas.push(validIguanas[unplacedIguanaIndex]);
+    } else {
+      placedIguanas.push(currentIguana);
+    }
+  });
+});
+
+export const getTreeCorrectnessMarkers = (draggedIguanas) => {
+  const alreadyFoundIguanas = [];
+  const correctnessMarkers = [];
+  draggedIguanas.forEach((iguana) => {
+    const { currentIguana, validIguanas } = iguana;
+    if (
+      validIguanas.includes(currentIguana) &&
+      !alreadyFoundIguanas.includes(currentIguana)
+    ) {
+      correctnessMarkers.push(true);
+    } else {
+      correctnessMarkers.push(false);
+    }
+  });
+
+  return correctnessMarkers;
+};
+
 export const noop = () => {};

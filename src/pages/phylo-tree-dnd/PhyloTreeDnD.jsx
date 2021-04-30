@@ -22,6 +22,7 @@ const PhyloTreeDnD = () => {
 
   const [undraggedIguanas, setUndraggedIguanas] = useState(iguanaNames);
   const [draggedIguanas, setDraggedIguanas] = useState(dropTargets);
+  const [treeCorrectnessMarkers, setTreeCorrectnessMarkers] = useState(null);
 
   const handleDrop = (id, droppedItem, previousItem) => {
     const { iguana, source } = droppedItem;
@@ -44,11 +45,19 @@ const PhyloTreeDnD = () => {
   const handleResetTree = () => {
     setUndraggedIguanas(iguanaNames);
     setDraggedIguanas(dropTargets);
+    setTreeCorrectnessMarkers(null);
   };
 
-  const handleShowTree = () => {};
+  const handleShowTree = () => {
+    setUndraggedIguanas([]);
 
-  const handleCheckTree = () => {};
+    const newDraggedIguanas = utils.getCompletedTree(draggedIguanas);
+    setDraggedIguanas(newDraggedIguanas);
+  };
+
+  const handleCheckTree = () => {
+    setTreeCorrectnessMarkers(utils.getTreeCorrectnessMarkers(draggedIguanas));
+  };
 
   const actionButtons = [
     { text: "Check Tree", handleClick: handleCheckTree },
@@ -73,7 +82,11 @@ const PhyloTreeDnD = () => {
             />
           </Grid>
           <Grid item xs>
-            <MainActivity draggedIguanas={draggedIguanas} onDrop={handleDrop} />
+            <MainActivity
+              draggedIguanas={draggedIguanas}
+              onDrop={handleDrop}
+              treeCorrectnessMarkers={treeCorrectnessMarkers}
+            />
           </Grid>
         </Grid>
         <CustomDragLayer />
