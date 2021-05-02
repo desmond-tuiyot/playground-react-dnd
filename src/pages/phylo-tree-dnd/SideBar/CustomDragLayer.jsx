@@ -1,4 +1,5 @@
 import { useDragLayer } from "react-dnd";
+import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import DragSourcePreview from "./DragSourcePreview";
@@ -45,6 +46,9 @@ const CustomDragLayer = () => {
     isDragging: monitor.isDragging(),
   }));
 
+  useEffect(() => {
+    console.log(initialSourceOffset, currentSourceOffset);
+  }, [initialSourceOffset, currentSourceOffset]);
   if (!isDragging) return null;
 
   return (

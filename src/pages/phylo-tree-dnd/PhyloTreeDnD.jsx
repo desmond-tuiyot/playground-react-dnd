@@ -48,7 +48,7 @@ const PhyloTreeDnD = () => {
 
       setUndraggedIguanas(newUndragged);
       setDraggedIguanas(newDragged);
-    } else if (destination === "sidebar") {
+    } else if (source !== "sidebar" && destination === "sidebar") {
       setUndraggedIguanas([...undraggedIguanas, iguana]);
       const newDraggedIguanas = draggedIguanas.map((item) => {
         return {
