@@ -41,6 +41,7 @@ const DropTarget = ({
   index,
   treeCorrectnessMarker,
   handleDragStart,
+  allowTransition,
 }) => {
   const classes = useStyles(bounds);
 
@@ -81,6 +82,7 @@ const DropTarget = ({
       {iguana.currentIguana ? (
         <>
           <DragSource
+            allowTransition={allowTransition}
             iguana={iguana.currentIguana}
             handleDragStart={handleDragStart}
             source={iguana.id}

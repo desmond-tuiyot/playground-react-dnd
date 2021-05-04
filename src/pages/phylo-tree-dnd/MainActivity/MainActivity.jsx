@@ -34,6 +34,7 @@ const MainActivity = ({
   draggedIguanas,
   onDrop,
   treeCorrectnessMarkers,
+  allowTransition,
 }) => {
   const classes = useStyles();
   const [imageRef, scaledBounds] = useScaledBounds(
@@ -44,6 +45,7 @@ const MainActivity = ({
   const dropTargets = draggedIguanas.map((iguana, index) => (
     <DropTarget
       key={index}
+      allowTransition={allowTransition}
       bounds={scaledBounds[index]}
       iguana={iguana}
       onDrop={onDrop}

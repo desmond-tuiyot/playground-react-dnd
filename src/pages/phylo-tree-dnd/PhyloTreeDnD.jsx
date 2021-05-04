@@ -23,8 +23,10 @@ const PhyloTreeDnD = () => {
   const [undraggedIguanas, setUndraggedIguanas] = useState(iguanaNames);
   const [draggedIguanas, setDraggedIguanas] = useState(dropTargets);
   const [treeCorrectnessMarkers, setTreeCorrectnessMarkers] = useState(null);
+  const [allowTransition, setAllowTransition] = useState(false);
 
   const handleDragStart = () => {
+    setAllowTransition(false);
     setTreeCorrectnessMarkers(null);
   };
 
@@ -32,7 +34,7 @@ const PhyloTreeDnD = () => {
     const { iguana, source, destination } = droppedItem;
     if (destination === "tree") {
       const id = iguanaDetails.id;
-      const previousItem = iguanaDetails.previousItem;
+      const previousItem = iguanaDetails.currentIguana;
 
       let newUndragged = utils.getNewUndraggedIguanas(
         undraggedIguanas,
@@ -68,6 +70,8 @@ const PhyloTreeDnD = () => {
   };
 
   const handleShowTree = () => {
+    setAllowTransition(true);
+    setTreeCorrectnessMarkers(null);
     setUndraggedIguanas([]);
 
     const newDraggedIguanas = utils.getCompletedTree(draggedIguanas);
@@ -75,6 +79,7 @@ const PhyloTreeDnD = () => {
   };
 
   const handleCheckTree = () => {
+    setAllowTransition(true);
     setTreeCorrectnessMarkers(utils.getTreeCorrectnessMarkers(draggedIguanas));
   };
 
@@ -96,6 +101,7 @@ const PhyloTreeDnD = () => {
         >
           <Grid item xs={6} sm={3} md={2}>
             <SideBar
+              allowTransition={allowTransition}
               onDrop={handleDrop}
               undraggedIguanas={undraggedIguanas}
               actionButtons={actionButtons}
@@ -104,6 +110,7 @@ const PhyloTreeDnD = () => {
           </Grid>
           <Grid item xs>
             <MainActivity
+              allowTransition={allowTransition}
               draggedIguanas={draggedIguanas}
               onDrop={handleDrop}
               treeCorrectnessMarkers={treeCorrectnessMarkers}

@@ -5,7 +5,12 @@ import { useDrop } from "react-dnd";
 
 import DragSources from "./DragSources";
 
-function UndraggedIguanasPanel({ handleDragStart, onDrop, undraggedIguanas }) {
+function UndraggedIguanasPanel({
+  allowTransition,
+  handleDragStart,
+  onDrop,
+  undraggedIguanas,
+}) {
   const [, drop] = useDrop({
     accept: "iguana",
     drop: (item) => {
@@ -30,6 +35,7 @@ function UndraggedIguanasPanel({ handleDragStart, onDrop, undraggedIguanas }) {
       <DragSources
         handleDragStart={handleDragStart}
         undraggedIguanas={undraggedIguanas}
+        allowTransition={allowTransition}
       />
     </Grid>
   );

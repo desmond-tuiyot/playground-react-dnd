@@ -47,7 +47,7 @@ const CustomDragLayer = () => {
   }));
 
   useEffect(() => {
-    console.log(initialSourceOffset, currentSourceOffset);
+    // console.log(initialSourceOffset, currentSourceOffset);
   }, [initialSourceOffset, currentSourceOffset]);
   if (!isDragging) return null;
 

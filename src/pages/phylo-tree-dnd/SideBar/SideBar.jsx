@@ -16,6 +16,7 @@ const SideBar = ({
   onDrop,
   undraggedIguanas,
   actionButtons,
+  allowTransition,
 }) => {
   const classes = useStyles();
 
@@ -25,22 +26,11 @@ const SideBar = ({
         <Instructions />
       </Grid>
       <UndraggedIguanasPanel
+        allowTransition={allowTransition}
         onDrop={onDrop}
         handleDragStart={handleDragStart}
         undraggedIguanas={undraggedIguanas}
       />
-      {/* <Grid
-        item
-        container
-        justify="center"
-        spacing={2}
-        style={{ minHeight: "4em" }}
-      >
-        <DragSources
-          handleDragStart={handleDragStart}
-          undraggedIguanas={undraggedIguanas}
-        />
-      </Grid> */}
       <Grid item container justify="center" spacing={2}>
         <ActionButtons buttons={actionButtons} />
       </Grid>
