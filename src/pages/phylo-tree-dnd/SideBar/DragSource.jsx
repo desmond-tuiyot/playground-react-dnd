@@ -5,11 +5,9 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import Grow from "@material-ui/core/Grow";
 
-import GrowTransition from "components/GrowTransition";
 import IguanaNameBox from "components/IguanaNameBox";
 import useNoDragSourcePreview from "hooks/useNoDragSourcePreview";
 import useDragSourceStyle from "hooks/useDragSourceStyle";
-import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.dragSource,

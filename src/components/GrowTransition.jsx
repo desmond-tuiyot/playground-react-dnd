@@ -11,8 +11,6 @@ const GrowTransition = ({
   const defaultStyle = {
     transition: `transform ${duration}ms ease-in-out`,
     transform: "scale(0)",
-    // transition: `opacity ${duration}ms ease-in-out`,
-    // opacity: "0",
   };
 
   const transitionStyles = {
